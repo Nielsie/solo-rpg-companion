@@ -1,0 +1,4 @@
+export const MENU_ITEM_TYPES = {
+    MENU_ITEM: 'MENU_ITEM',
+    NESTED_MENU_ITEM: 'NESTED_MENU_ITEM',
+};
