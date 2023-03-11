@@ -3,6 +3,7 @@ import {persist, createJSONStorage, devtools} from "zustand/middleware";
 import localforage from "localforage";
 import {timelineActions} from "./campaign-actions/timeline-actions.js";
 import {characterActions} from "./campaign-actions/character-actions.js";
+import {threadActions} from "./campaign-actions/thread-actions.js";
 
 // this is a bit of a hack, this keeps the current campaignId cached in memory, so we don't have to retrieve it from the url all the time
 let currentId = null;
@@ -24,9 +25,11 @@ export const useCampaignStore = (id) => {
                     // actions
                     ...timelineActions(set),
                     ...characterActions(set),
+                    ...threadActions(set),
 
                     // safe defaults
                     characters: [],
+                    threads: [],
 
                     _hasHydrated: false,
                     setHasHydrated: (state) => {

@@ -22,7 +22,7 @@ export const defaultMenu = (campaignId) => {
                         <ListItemButton>Mobs</ListItemButton>
                     </ListItem>
                     <ListItem>
-                        <ListItemButton>Threads</ListItemButton>
+                        <Link href={`/game/${campaignId}/threads`}><ListItemButton>Threads</ListItemButton></Link>
                     </ListItem>
                     <ListItem>
                         <ListItemButton>Combat Tracker</ListItemButton>

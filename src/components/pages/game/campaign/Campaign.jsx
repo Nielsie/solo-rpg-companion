@@ -9,6 +9,9 @@ import {ToolsFateCheck} from "./tools-pages/ToolsFateCheck.jsx";
 import {Characters} from "./pages/Characters/Characters.jsx";
 import {NewCharacter} from "./pages/Characters/NewCharacter";
 import {Character} from "./pages/Characters/Character.jsx";
+import {Threads} from "./pages/Threads/Threads.jsx";
+import {NewThread} from "./pages/Threads/NewThread.jsx";
+import {Thread} from "./pages/Threads/Thread.jsx";
 
 const mapHeader = props => ({
     title: useCampaignStore(props.params.id).getState().name,
@@ -31,6 +34,10 @@ export const Campaign = props => {
             <Route path="/game/:id/characters" component={Characters}/>
             <Route path="/game/:id/characters/new" component={NewCharacter}/>
             <Route path="/game/:id/characters/:characterId" component={Character}/>
+
+            <Route path="/game/:id/threads" component={Threads}/>
+            <Route path="/game/:id/threads/new" component={NewThread}/>
+            <Route path="/game/:id/threads/:threadId" component={Thread}/>
 
             <Route path="/game/:id/tools" component={ToolsHome}/>
             <Route path="/game/:id/tools/fatecheck" component={ToolsFateCheck}/>
