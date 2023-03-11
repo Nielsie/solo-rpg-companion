@@ -10,21 +10,19 @@ import {RemovalDialog} from "../dialogs/RemovalDialog.jsx";
 import {UUID} from "../../../../../../utils/uuid.js";
 import {MuiStyledComponents} from "../list-components/ListComponents.jsx";
 import {Virtuoso} from "react-virtuoso";
-import {TextCardBase} from "../cards/TextCard.jsx";
-import {DATE_UTILS} from "../../../../../../utils/dates.js";
+import {CHARACTER_BUILDERS} from "../../../../../../builders/character-builders.js";
+import {EntryEditor} from "../editors/EntryEditor.jsx";
+import {BioEntryCard} from "./cards/BioEntryCard.jsx";
 
-const renderBioCard = (index, entry) => {
-    if (!entry) return null;
-
+const renderBioCard = (characterId) => (index) => {
     return (
-        <TextCardBase body={entry.body} date={DATE_UTILS.formatDateTimeFromIso(entry.created)} caption="Bio"/>
+        <BioEntryCard characterId={characterId} bioIndex={index}/>
     );
 };
 
 const CharacterBase = props => {
     const [location, navigation] = useLocation();
     const [isEditMode, setIsEditMode] = useState(false);
-    const [bioEntry, setBioEntry] = useState('');
     const [isRemoveDialogOpen, setIsRemoveDialogOpen] = useState(false);
     const headerProps = useMemo(() => mapHeader(props.name), [props.name]);
 
@@ -39,29 +37,19 @@ const CharacterBase = props => {
     const onSubmitClick = (newCharData) => {
         if (validate()) {
             setIsEditMode(false);
-            props.onEditCharacter({
-                id: props.id,
-                name: newCharData.name,
-                description: newCharData.description,
-                isActive: newCharData.isActive,
-                updated: new Date(),
-            });
+            props.onEditCharacter(CHARACTER_BUILDERS.buildUpdatedCharacter(props.id, newCharData.name, newCharData.description, newCharData.isActive));
         }
     };
 
-    const onBioChange = event => setBioEntry(event.target.value);
-    const onBioSubmitClick = () => {
-        if(bioEntry) {
-            props.onSubmitBioEntry(
-                props.id,
-                {
-                    id: UUID.generate(),
-                    body: bioEntry,
-                    created: new Date(),
-                },
-            );
-            setBioEntry('');
-        }
+    const onBioSubmitClick = (body) => {
+        props.onSubmitBioEntry(
+            props.id,
+            {
+                id: UUID.generate(),
+                body,
+                created: new Date(),
+            },
+        );
     };
 
     const onRemoveClick = () => setIsRemoveDialogOpen(true);
@@ -96,23 +84,17 @@ const CharacterBase = props => {
                     )}
 
                     <Typography level="h6">Bio:</Typography>
-
                     <Card
                         variant="outlined"
                         sx={{width: '100%'}}
                     >
-                        <Stack direction="column" spacing={1}>
-                            <Typography level="body3">New Bio Entry:</Typography>
-                            <Textarea color="neutral" minRows={4} onChange={onBioChange} value={bioEntry} />
-                            <Button variant="solid" color="primary" onClick={onBioSubmitClick}>Submit Entry</Button>
-                        </Stack>
+                        <EntryEditor caption="New Bio Entry:" onSubmitClick={onBioSubmitClick}/>
                     </Card>
-
                     <Virtuoso
                         useWindowScroll
-                        data={props.bio}
+                        totalCount={props.bio.length || 0}
                         components={MuiStyledComponents}
-                        itemContent={renderBioCard}
+                        itemContent={renderBioCard(props.id)}
                     />
 
                 </Stack>

@@ -41,7 +41,40 @@ const addBioEntry = set => (id, newBioEntry) => {
             return character;
         }),
     }));
-}
+};
+
+const editBioEntry = set => (characterId, bioId, bioBody) => {
+    set(state => ({
+        characters: state.characters.map(character => {
+            if (character.id === characterId) {
+                return {
+                    ...character,
+                    bio: character.bio.map(bio => {
+                        if (bio.id === bioId) {
+                            return { ...bio, body: bioBody };
+                        }
+                        return bio;
+                    }),
+                };
+            }
+            return character;
+        }),
+    }));
+};
+
+const removeBioEntry = set => (characterId, bioId) => {
+    set(state => ({
+        characters: state.characters.map(character => {
+            if (character.id === characterId) {
+                return {
+                    ...character,
+                    bio: character.bio.filter(bio => bio.id !== bioId),
+                };
+            }
+            return character;
+        }),
+    }));
+};
 
 export const characterActions = set => ({
     addCharacter: addCharacter(set),
@@ -49,4 +82,6 @@ export const characterActions = set => ({
     editCharacter: editCharacter(set),
     toggleCharacterActiveness: toggleCharacterActiveness(set),
     addBioEntry: addBioEntry(set),
+    editBioEntry: editBioEntry(set),
+    removeBioEntry: removeBioEntry(set),
 });

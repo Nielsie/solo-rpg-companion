@@ -12,7 +12,8 @@ import {useState} from "react";
 export const TextCardBase = props => {
     const [isExpanded, setIsExpanded] = useState(false);
 
-    const onExpandClicked = () => setIsExpanded(!isExpanded);
+    const onExpandClick = () => setIsExpanded(!isExpanded);
+    const onEditClick = () => props.onEditClick && props.onEditClick();
 
     return (
         <Card variant="outlined" sx={{width: '100%'}}>
@@ -46,13 +47,13 @@ export const TextCardBase = props => {
                 </Typography>
                 <Stack direction="row" spacing={1} sx={{ml: 'auto'}}>
                     <Divider orientation="vertical"/>
-                    <IconButton variant="plain" size="12">
+                    <IconButton variant="plain" size="12" onClick={onEditClick}>
                         <EditIcon/>
                     </IconButton>
                     {props.renderInnerCardContent && (
                         <>
                             <Divider orientation="vertical"/>
-                            <IconButton variant="plain" size="12" onClick={onExpandClicked}>
+                            <IconButton variant="plain" size="12" onClick={onExpandClick}>
                                 {!isExpanded ? <ExpandMoreIcon/> : <ExpandLessIcon/>}
                             </IconButton>
                         </>

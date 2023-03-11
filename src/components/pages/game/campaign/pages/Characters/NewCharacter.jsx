@@ -6,6 +6,7 @@ import {BackArrow} from "../../../../../layout/header/buttons/BackArrow.jsx";
 import {useMemo, useState} from "react";
 import {useLocation} from "wouter";
 import {UUID} from "../../../../../../utils/uuid.js";
+import {CHARACTER_BUILDERS} from "../../../../../../builders/character-builders.js";
 
 const NewCharacterBase = props => {
     const [location, navigation] = useLocation();
@@ -24,18 +25,7 @@ const NewCharacterBase = props => {
     const onBioChange = event => setBio(event.target.value);
     const onSubmitClick = () => {
         if (validate()) {
-            props.onNewCharacter({
-                id: UUID.generate(),
-                name,
-                description,
-                isActive: true,
-                created: new Date(),
-                bio: bio ? [{
-                    id: UUID.generate(),
-                    body: bio,
-                    created: new Date(),
-                }] : [],
-            });
+            props.onNewCharacter(CHARACTER_BUILDERS.buildNewCharacter(name, description, true, bio));
             navigation(`/game/${props.campaignId}/characters`);
         }
     };

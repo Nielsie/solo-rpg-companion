@@ -8,7 +8,7 @@ import {IconMenuButton} from "../../../../../layout/header/buttons/IconMenuButto
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import {useMemo} from "react";
-import {CharacterCard} from "../cards/CharacterCard";
+import {CharacterCard} from "./cards/CharacterCard.jsx";
 
 const renderCharacterCard = index => {
     return (
