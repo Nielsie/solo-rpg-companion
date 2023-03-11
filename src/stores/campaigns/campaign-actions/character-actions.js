@@ -1,6 +1,9 @@
+import {TIMELINE_BUILDERS} from "../../../builders/timeline-builders.js";
+
 const addCharacter = set => newCharacter => {
     set(state => ({
         characters: [...state.characters, newCharacter],
+        timeline: [...state.timeline, TIMELINE_BUILDERS.characterAdded(newCharacter)],
     }));
 };
 

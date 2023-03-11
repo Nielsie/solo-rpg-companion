@@ -46,10 +46,12 @@ export const TextCardBase = props => {
                     {props.date}
                 </Typography>
                 <Stack direction="row" spacing={1} sx={{ml: 'auto'}}>
-                    <Divider orientation="vertical"/>
-                    <IconButton variant="plain" size="12" onClick={onEditClick}>
-                        <EditIcon/>
-                    </IconButton>
+                    {(!props.hideEditIcon || props.renderInnerCardContent) && (<Divider orientation="vertical"/>)}
+                    {!props.hideEditIcon && (
+                        <IconButton variant="plain" size="12" onClick={onEditClick}>
+                            <EditIcon/>
+                        </IconButton>
+                    )}
                     {props.renderInnerCardContent && (
                         <>
                             <Divider orientation="vertical"/>
