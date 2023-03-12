@@ -12,6 +12,10 @@ import {Character} from "./pages/Characters/Character.jsx";
 import {Threads} from "./pages/Threads/Threads.jsx";
 import {NewThread} from "./pages/Threads/NewThread.jsx";
 import {Thread} from "./pages/Threads/Thread.jsx";
+import {ToolsMeaningRolls} from "./tools-pages/ToolsMeaningRolls.jsx";
+import {Scenes} from "./pages/Scenes/Scenes.jsx";
+import {NewScene} from "./pages/Scenes/NewScene.jsx";
+import {Scene} from "./pages/Scenes/Scene.jsx";
 
 const mapHeader = props => ({
     title: useCampaignStore(props.params.id).getState().name,
@@ -39,8 +43,13 @@ export const Campaign = props => {
             <Route path="/game/:id/threads/new" component={NewThread}/>
             <Route path="/game/:id/threads/:threadId" component={Thread}/>
 
+            <Route path="/game/:id/scenes" component={Scenes}/>
+            <Route path="/game/:id/scenes/new" component={NewScene}/>
+            <Route path="/game/:id/scenes/:sceneId" component={Scene}/>
+
             <Route path="/game/:id/tools" component={ToolsHome}/>
             <Route path="/game/:id/tools/fatecheck" component={ToolsFateCheck}/>
+            <Route path="/game/:id/tools/meaningrolls" component={ToolsMeaningRolls}/>
         </Switch>
     );
 };

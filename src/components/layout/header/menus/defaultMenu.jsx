@@ -16,17 +16,20 @@ export const defaultMenu = (campaignId) => {
                         <ListItemButton>Player</ListItemButton>
                     </ListItem>
                     <ListItem>
-                        <Link href={`/game/${campaignId}/characters`}><ListItemButton>Characters</ListItemButton></Link>
+                        <Link href={`/game/${campaignId}/scenes`}><ListItemButton>Scenes</ListItemButton></Link>
                     </ListItem>
                     <ListItem>
-                        <ListItemButton>Mobs</ListItemButton>
+                        <Link href={`/game/${campaignId}/characters`}><ListItemButton>Characters</ListItemButton></Link>
                     </ListItem>
+                    {/*<ListItem>
+                        <ListItemButton>Mobs</ListItemButton>
+                    </ListItem>*/}
                     <ListItem>
                         <Link href={`/game/${campaignId}/threads`}><ListItemButton>Threads</ListItemButton></Link>
                     </ListItem>
-                    <ListItem>
+                    {/*<ListItem>
                         <ListItemButton>Combat Tracker</ListItemButton>
-                    </ListItem>
+                    </ListItem>*/}
                 </List>
             </ListItem>
             <ListItem nested>

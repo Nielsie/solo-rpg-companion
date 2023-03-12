@@ -3,14 +3,11 @@ import {connectCampaign} from "../../../../../utils/zustand/connect.jsx";
 import {Master} from "../../../../layout/header/Master.jsx";
 import {Button, Stack, Typography} from "@mui/joy";
 import {BackArrow} from "../../../../layout/header/buttons/BackArrow.jsx";
-import {useLocation} from "wouter";
+import {Link, useLocation} from "wouter";
 import {useMemo} from "react";
 
 const ToolsHomeBase = props => {
-    const [location, setLocation] = useLocation();
-    const headerProps = useMemo(() => mapHeader(props), [props]);
-
-    const onFateCheckClick = () => setLocation(`/game/${props.campaignId}/tools/fatecheck`);
+    const headerProps = useMemo(() => mapHeader(props), [props.campaignName]);
 
     return (
         <Master {...headerProps}>
@@ -19,9 +16,9 @@ const ToolsHomeBase = props => {
                     What do you want to do?
                 </Typography>
                 <Stack direction="column" spacing={2} mt={2}>
-                    <Button onClick={onFateCheckClick}>Fate Check</Button>
-                    <Button>Action/Description/Element Roll</Button>
-                    <Button>Start New Scene</Button>
+                    <Link href={`/game/${props.campaignId}/tools/fatecheck`}><Button>Fate Check</Button></Link>
+                    <Link href={`/game/${props.campaignId}/tools/meaningrolls`}><Button>Action/Description/Element Roll</Button></Link>
+                    <Link href={`/game/${props.campaignId}/scenes/new`}><Button>Start New Scene</Button></Link>
                     <Button>Skill Check</Button>
                     <Button>Roll Dice</Button>
                 </Stack>
