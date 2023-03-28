@@ -1,3 +1,5 @@
+import {TIMELINE_BUILDERS} from "../../../builders/timeline-builders.js";
+
 const addScene = set => newScene => {
     set(state => ({
         scenes: [newScene, ...state.scenes],
@@ -5,6 +7,7 @@ const addScene = set => newScene => {
             ...state.mythic,
             chaosFactor: newScene.chaosFactor,
         },
+        timeline: [...state.timeline, TIMELINE_BUILDERS.sceneAdded(newScene)],
     }));
 };
 

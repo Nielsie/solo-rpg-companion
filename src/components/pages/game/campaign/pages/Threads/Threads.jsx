@@ -1,14 +1,15 @@
 import Box from "@mui/joy/Box";
 import {connectCampaign} from "../../../../../../utils/zustand/connect.jsx";
 import {Master} from "../../../../../layout/header/Master.jsx";
-import {Button, Card, Link, Typography} from "@mui/joy";
+import {Button, Typography} from "@mui/joy";
 import {Virtuoso} from 'react-virtuoso';
 import {MuiStyledComponents} from "../list-components/ListComponents.jsx";
 import {IconMenuButton} from "../../../../../layout/header/buttons/IconMenuButton";
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import {useMemo} from "react";
 import {ThreadCard} from "./cards/ThreadCard.jsx";
+import {Link} from "wouter";
 
 const renderThreadCard = index => {
     return (
@@ -55,7 +56,7 @@ const mapHeader = campaignId => ({
     title: `Threads`,
     leftButtonGroup: [() => <IconMenuButton href={`/game/${campaignId}`} icon={<ArrowBackIosNewIcon/>}/>],
     rightButtonGroup: [
-        () => <IconMenuButton href={`/game/${campaignId}/threads/new`} icon={<PersonAddIcon/>}/>,
+        () => <IconMenuButton href={`/game/${campaignId}/threads/new`} icon={<LibraryAddIcon/>}/>,
         /*() => <ToolButton campaignId={campaignId}/>,
         () => <HamburgerMenu menuItems={defaultMenu(campaignId)}/>,*/
     ],

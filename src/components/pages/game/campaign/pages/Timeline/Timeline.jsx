@@ -3,13 +3,15 @@ import {connectCampaign} from "../../../../../../utils/zustand/connect.jsx";
 import {Master} from "../../../../../layout/header/Master.jsx";
 import {HamburgerMenu} from "../../../../../layout/header/buttons/HamburgerMenu.jsx";
 import {defaultMenu} from "../../../../../layout/header/menus/defaultMenu.jsx";
-import {IconButton, Sheet, Stack} from "@mui/joy";
+import {Button, IconButton, Input, Sheet, Stack} from "@mui/joy";
 import CasinoIcon from '@mui/icons-material/Casino';
 import {ToolButton} from "../../../../../layout/header/buttons/ToolButton.jsx";
 import {Virtuoso} from 'react-virtuoso';
 import {MuiStyledComponents} from "../list-components/ListComponents.jsx";
 import {MasterCard} from "../cards/MasterCard.jsx";
-import {useMemo} from "react";
+import {useMemo, useState} from "react";
+import MessageIcon from '@mui/icons-material/Message';
+import {TIMELINE_BUILDERS} from "../../../../../../builders/timeline-builders.js";
 
 const renderTimeLineCard = index => {
     return (
@@ -19,6 +21,13 @@ const renderTimeLineCard = index => {
 
 const TimelineBase = props => {
     const headerProps = useMemo(() => mapHeader(props), [props]);
+    const [freeTextMessage, setFreeTextMessage] = useState('');
+
+    const onMessageChange = (event) => setFreeTextMessage(event.target.value);
+    const onMessageSubmitClick = () => {
+        props.onMessageSubmitClick && props.onMessageSubmitClick(freeTextMessage);
+        setFreeTextMessage('');
+    };
 
     return (
         <Master {...headerProps}>
@@ -39,6 +48,7 @@ const TimelineBase = props => {
                         components={MuiStyledComponents}
                         itemContent={renderTimeLineCard}
                         initialTopMostItemIndex={(props.totalCount || 0) - 1}
+                        followOutput={'auto'}
                     />
                 </Box>
 
@@ -47,12 +57,14 @@ const TimelineBase = props => {
                         elevation={3}
                         variant="soft"
                         color="primary"
+                        sx={{p: 1}}
                     >
-                        <Stack direction="row">
-                            <IconButton variant="plain">
-                                <CasinoIcon/>
-                            </IconButton>
-                        </Stack>
+                        <Input
+                            startDecorator={<MessageIcon />}
+                            endDecorator={<Button onClick={onMessageSubmitClick}>Submit Message</Button>}
+                            onChange={onMessageChange}
+                            value={freeTextMessage}
+                        />
                     </Sheet>
                 </Box>
             </Box>
@@ -72,12 +84,14 @@ const selectors = ownProps => state => ([
     state.id,
     state.name,
     state.timeline,
+    state.addTimelineEntry,
 ]);
 
-const mappers = (id, name, timeline, ownProps) => ({
+const mappers = (id, name, timeline, addTimelineEntry, ownProps) => ({
     campaignId: id,
     campaignName: name,
     totalCount: timeline?.length || 0,
+    onMessageSubmitClick: (message) => addTimelineEntry(TIMELINE_BUILDERS.freeTextMessage(message)),
 });
 
 export const Timeline = connectCampaign(selectors)(mappers)(TimelineBase);

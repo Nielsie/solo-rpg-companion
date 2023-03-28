@@ -1,9 +1,10 @@
 import {UUID} from "../utils/uuid.js";
 
-const buildNewCharacter = (name, description, isActive = true, bio = null, id = UUID.generate(), created = new Date()) => ({
+const buildNewCharacter = (name, description, isActive = true, bio = null, imageUrl = null, id = UUID.generate(), created = new Date()) => ({
     id,
     name,
     description,
+    imageUrl, //https://drive.google.com/uc?id=1GhyOVegzGt_ABW7z7EETwAbP_K_UusMz
     isActive,
     created,
     updated: created,
@@ -14,10 +15,11 @@ const buildNewCharacter = (name, description, isActive = true, bio = null, id = 
     }] : [],
 });
 
-const buildUpdatedCharacter = (id, name, description, isActive = true, updated = new Date()) => ({
+const buildUpdatedCharacter = (id, name, description, imageUrl, isActive = true, updated = new Date()) => ({
     id,
     name,
     description,
+    imageUrl,
     isActive,
     updated,
 });

@@ -1,7 +1,7 @@
 import {connectCampaign} from "../../../../../../../utils/zustand/connect.jsx";
 import {DATE_UTILS} from "../../../../../../../utils/dates.js";
 import Box from "@mui/joy/Box";
-import {Card, CardOverflow, Divider, Link as MuiLink, Switch, Typography} from "@mui/joy";
+import {Avatar, Card, CardOverflow, Divider, Link as MuiLink, Stack, Switch, Typography} from "@mui/joy";
 import {Link} from "wouter";
 
 const CharacterCardBase = props => {
@@ -23,14 +23,22 @@ const CharacterCardBase = props => {
         >
             <Box sx={{pb: 2}}>
                 <Box sx={{display: 'flex', alignItems: 'center'}}>
+                    <Avatar alt={props.title} src={props.imageUrl} sx={{mr: 2, borderRadius: 'sm'}}>{props.title[0]}</Avatar>
                     <Link href={`/game/${props.campaignId}/characters/${props.id}`}>
                         <MuiLink
                             overlay
                             underline="none"
                         >
-                            <Typography level="h2" sx={{fontSize: 'md', color: props.isDisabled ? 'neutral.outlinedDisabledColor' : undefined}}>
-                                {props.title}
-                            </Typography>
+                            <Stack direction="column">
+                                <Typography level="h2" sx={{fontSize: 'md', color: props.isDisabled ? 'neutral.outlinedDisabledColor' : undefined}}>
+                                    {props.title}
+                                </Typography>
+                                {props.subtitle && (
+                                    <Typography level="body2" sx={{mt: 0.5, color: props.isDisabled ? 'neutral.outlinedDisabledColor' : undefined}}>
+                                        {props.subtitle}
+                                    </Typography>
+                                )}
+                            </Stack>
                         </MuiLink>
                     </Link>
                     <Switch
@@ -42,11 +50,6 @@ const CharacterCardBase = props => {
                         onChange={onToggleClick}
                     />
                 </Box>
-                {props.subtitle && (
-                    <Typography level="body2" sx={{mt: 0.5, color: props.isDisabled ? 'neutral.outlinedDisabledColor' : undefined}}>
-                        {props.subtitle}
-                    </Typography>
-                )}
             </Box>
             <Divider/>
             <CardOverflow
@@ -82,6 +85,7 @@ const mappers = (id, character, toggleCharacterActiveness, ownProps) => ({
     id: character?.id,
     title: character?.name,
     subtitle: character?.description,
+    imageUrl: character?.imageUrl,
     caption: character?.isActive ? 'Active' : 'Inactive',
     isDisabled: !(character?.isActive),
     date: DATE_UTILS.formatDateTimeFromIso(character?.created || new Date()),

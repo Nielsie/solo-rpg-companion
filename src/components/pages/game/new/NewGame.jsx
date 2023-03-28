@@ -6,14 +6,14 @@ import {useCampaignsStore} from "../../../../stores/campaigns/campaigns-store.js
 import {UUID} from "../../../../utils/uuid.js";
 import {useLocation} from "wouter";
 import {BackArrow} from "../../../layout/header/buttons/BackArrow.jsx";
-import {RULESETS} from "../../../../constants/rulesets.js";
+import {RULESET_NAMES, RULESETS} from "../../../../constants/rulesets.js";
 import {createInitialCampaign} from "../../../../stores/campaigns/initialCampaign";
 
 const NewGameBase = memo(props => {
     const [location, setLocation] = useLocation();
 
     const [campaignName, setCampaignName] = useState('My Awesome Adventure');
-    const [ruleSet, setRuleSet] = useState(RULESETS.THE_WITCHER);
+    const [ruleSet, setRuleSet] = useState(RULESETS.MYTHIC);
 
     const addCampaign = useCampaignsStore((state) => state.addCampaign);
 
@@ -57,7 +57,9 @@ const NewGameBase = memo(props => {
                     <FormControl>
                         <FormLabel>Rule System</FormLabel>
                         <Select onChange={onRuleSetChange} value={ruleSet}>
-                            <Option value={RULESETS.THE_WITCHER}>The Witcher</Option>
+                            {Object.keys(RULESETS).map(ruleSet => (
+                                <Option key={RULESETS[ruleSet]} value={RULESETS[ruleSet]}>{RULESET_NAMES[RULESETS[ruleSet]]}</Option>
+                            ))}
                         </Select>
                     </FormControl>
                     <Button onClick={onStartClick}>Start your journey!</Button>

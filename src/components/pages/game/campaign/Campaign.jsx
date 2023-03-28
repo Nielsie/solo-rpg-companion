@@ -16,6 +16,8 @@ import {ToolsMeaningRolls} from "./tools-pages/ToolsMeaningRolls.jsx";
 import {Scenes} from "./pages/Scenes/Scenes.jsx";
 import {NewScene} from "./pages/Scenes/NewScene.jsx";
 import {Scene} from "./pages/Scenes/Scene.jsx";
+import {useEffect, useState} from "react";
+import {RulesetSettings} from "../../debug/ruleset/Ruleset.jsx";
 
 const mapHeader = props => ({
     title: useCampaignStore(props.params.id).getState().name,
@@ -24,6 +26,22 @@ const mapHeader = props => ({
 
 export const Campaign = props => {
     const hasHydrated = useCampaignStore(props.params.id)(state => state._hasHydrated);
+    const ruleset = useCampaignStore(props.campaignId)((state) => state.ruleSet);
+    const [routesRenderer, setRoutesRenderer] = useState(() => null);
+
+    useEffect(() => {
+        const loadRoutes = async () => {
+            try {
+                const {renderRoutes} = await import(`../../../../rulesets/${ruleset.toLowerCase()}/routes/renderRoutes.jsx`);
+                setRoutesRenderer(() => renderRoutes);
+            } catch {
+                console.warn(`No routes found for ruleset ${ruleset}`);
+            }
+        }
+        if (hasHydrated) {
+            loadRoutes();
+        }
+    }, [hasHydrated, ruleset]);
 
     if (!hasHydrated) return (
         <Master {...mapHeader(props)}>
@@ -50,6 +68,12 @@ export const Campaign = props => {
             <Route path="/game/:id/tools" component={ToolsHome}/>
             <Route path="/game/:id/tools/fatecheck" component={ToolsFateCheck}/>
             <Route path="/game/:id/tools/meaningrolls" component={ToolsMeaningRolls}/>
+
+
+            <Route path="/game/:id/debug/ruleset" component={RulesetSettings} />
+
+            {routesRenderer && routesRenderer()}
+
         </Switch>
     );
 };

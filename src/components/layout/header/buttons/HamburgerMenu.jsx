@@ -26,7 +26,7 @@ export const HamburgerMenu = memo(props => {
                 <Box
                     sx={{width: 256}}
                 >
-                    {props.menuItems}
+                    {props.renderItems ? props.renderItems() : props.menuItems}
                 </Box>
             </Drawer>
         </>

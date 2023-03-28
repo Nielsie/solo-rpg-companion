@@ -1,7 +1,7 @@
 import {UUID} from "../utils/uuid.js";
 import {NEW_SCENE_RESULT} from "../utils/mythic/mythic-constants.js";
 
-const initialScene = {
+const initialScene = () => ({
     id: UUID.generate(),
     title: "",
     description: "",
@@ -11,7 +11,7 @@ const initialScene = {
     originalTitle: "",
     originalDescription: "",
     sceneStatus: NEW_SCENE_RESULT.NORMAL,
-};
+});
 
 const buildNewScene = (title, description, chaosFactor, id = UUID.generate(), created = new Date()) => ({
     id,

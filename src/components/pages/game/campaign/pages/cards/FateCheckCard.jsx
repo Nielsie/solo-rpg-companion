@@ -5,15 +5,15 @@ import {TextCardBase} from "./TextCard.jsx";
 import {
     FATE_RESULTS_TO_STRING,
     PROBABILITY_TO_STRING,
-    RANDOM_EVENTS_TO_STRING
 } from "../../../../../../utils/mythic/mythic-constants.js";
-import {CardContent, Divider, Stack, Typography} from "@mui/joy";
+import {CardContent, Divider, Typography} from "@mui/joy";
+import {RANDOM_EVENT_FORMATTERS} from "../../../../../../utils/formatters/random-event-formatters.js";
 
 const formatBody = entry => {
     let body = entry.question ? `${entry.question} - The answer is '${FATE_RESULTS_TO_STRING[entry.result.fateResult]}'.` :
         `You asked a question, the answer is '${FATE_RESULTS_TO_STRING[entry.result.fateResult]}'.`;
     if (entry.result.randomEvent) {
-        body += ` Oh no! A '${RANDOM_EVENTS_TO_STRING[entry.result.randomEvent.event]}' has happened as well.`;
+        body += ` Oh no! A '${RANDOM_EVENT_FORMATTERS.formatRandomEvent(entry.result.randomEvent)}' has happened as well.`;
     }
 
     return body;
@@ -31,8 +31,29 @@ const renderInnerCardContent = (entry, ownProps) => () => {
                     <Typography fontWeight="lg">Probability:</Typography> {PROBABILITY_TO_STRING[entry.probability]}
                 </Typography>
                 <Typography level="body2" fontSize="sm">
-                    <Typography fontWeight="lg">Chaosfactor:</Typography> {entry.chaosFactor}
+                    <Typography fontWeight="lg">Chaos Factor:</Typography> {entry.chaosFactor}
                 </Typography>
+                {entry.result.randomEvent && (
+                    <>
+                        <Typography level="body2" fontSize="sm">
+                            <Typography fontWeight="lg">Random Event:</Typography> {RANDOM_EVENT_FORMATTERS.formatRandomEvent(entry.result.randomEvent, false, false)}
+                        </Typography>
+                        {entry.result.randomEvent?.character && (
+                            <>
+                                <Typography level="body2" fontSize="sm">
+                                    <Typography fontWeight="lg">Character:</Typography> {entry.result.randomEvent?.character.name}
+                                </Typography>
+                            </>
+                        )}
+                        {entry.result.randomEvent?.thread && (
+                            <>
+                                <Typography level="body2" fontSize="sm">
+                                    <Typography fontWeight="lg">Thread:</Typography> {entry.result.randomEvent?.thread.name}
+                                </Typography>
+                            </>
+                        )}
+                    </>
+                )}
             </CardContent>
         </>
     )

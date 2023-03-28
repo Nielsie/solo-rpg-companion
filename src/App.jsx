@@ -5,6 +5,8 @@ import {NewGame} from "./components/pages/game/new/NewGame.jsx";
 import {useCampaignsStore} from "./stores/campaigns/campaigns-store.js";
 import {Campaign} from "./components/pages/game/campaign/Campaign.jsx";
 import {ContinueGame} from "./components/pages/game/continue/ContinueGame.jsx";
+import {MythicTables} from "./components/pages/debug/mythic/MythicTables.jsx";
+import {MythicTablesEditor} from "./components/pages/settings/mythic/MythicTablesEditor.jsx";
 
 export const App = () => {
     const hasHydrated = useCampaignsStore(state => state._hasHydrated);
@@ -22,6 +24,11 @@ export const App = () => {
                 <Route path="/game/continue" component={ContinueGame} />
                 <Route path="/game/:id" component={Campaign} />
                 <Route path="/game/:id/:rest*" component={Campaign} />
+
+
+                <Route path="/settings/mythic/tables" component={MythicTablesEditor} />
+
+                <Route path="/debug/mythictables" component={MythicTables} />
             </Switch>
         </Box>
     );

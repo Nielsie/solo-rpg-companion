@@ -120,7 +120,9 @@ export const MEANING_TABLES = {
 
 export const MEANING_TABLES_TO_STRING = {
     [MEANING_TABLES.ACTIONS]: 'Actions',
+    [MEANING_TABLES.ACTIONS_PART2]: 'Actions Part 2',
     [MEANING_TABLES.DESCRIPTIONS]: 'Descriptions',
+    [MEANING_TABLES.DESCRIPTIONS_PART2]: 'Descriptions Part 2',
     [MEANING_TABLES.ELEMENTS_ADVENTURE_TONE]: 'Elements - Adventure Tone',
     [MEANING_TABLES.ELEMENTS_ALIEN_SPECIES]: 'Elements - Alien Species',
     [MEANING_TABLES.ELEMENTS_ANIMAL_ACTIONS]: 'Elements - Animal Actions',

@@ -12,9 +12,9 @@ export const defaultMenu = (campaignId) => {
                     <ListItem>
                         <Link href={`/game/${campaignId}`}><ListItemButton>Timeline</ListItemButton></Link>
                     </ListItem>
-                    <ListItem>
+                    {/*<ListItem>
                         <ListItemButton>Player</ListItemButton>
-                    </ListItem>
+                    </ListItem>*/}
                     <ListItem>
                         <Link href={`/game/${campaignId}/scenes`}><ListItemButton>Scenes</ListItemButton></Link>
                     </ListItem>
@@ -37,6 +37,9 @@ export const defaultMenu = (campaignId) => {
                 <List>
                     <ListItem>
                         <Link href="/"><ListItemButton>Home</ListItemButton></Link>
+                    </ListItem>
+                    <ListItem>
+                        <Link href="/settings/mythic/tables"><ListItemButton>Edit Mythic Tables</ListItemButton></Link>
                     </ListItem>
                 </List>
             </ListItem>

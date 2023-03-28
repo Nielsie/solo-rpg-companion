@@ -18,6 +18,16 @@ export const useCampaignsStore = create(
                 set((state) => ({ campaigns: state.campaigns.filter((campaign) => campaign.id !== campaignId) }));
                 await localforage.removeItem(`SRC-campaign-${campaignId}`);
             },
+            changeRuleset: (campaignId, newRuleset) => {
+                set((state) => ({
+                    campaigns: state.campaigns.map((campaign) => {
+                        if (campaign.id === campaignId) {
+                            campaign.ruleSet = newRuleset;
+                        }
+                        return campaign;
+                    }),
+                }));
+            },
             _hasHydrated: false,
             setHasHydrated: (state) => {
                 set({

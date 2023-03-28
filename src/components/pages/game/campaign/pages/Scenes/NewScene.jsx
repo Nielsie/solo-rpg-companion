@@ -1,46 +1,24 @@
 import Box from "@mui/joy/Box";
 import {connectCampaign} from "../../../../../../utils/zustand/connect.jsx";
 import {Master} from "../../../../../layout/header/Master.jsx";
-import {Button, Card, FormControl, FormLabel, Input, Sheet, Slider, Stack, Textarea, Typography} from "@mui/joy";
+import {Button, Card, Input, Slider, Stack, Textarea, Typography} from "@mui/joy";
 import {BackArrow} from "../../../../../layout/header/buttons/BackArrow.jsx";
 import {useMemo, useState} from "react";
 import {useLocation} from "wouter";
-import {CHARACTER_BUILDERS} from "../../../../../../builders/character-builders.js";
-import {THREAD_BUILDERS} from "../../../../../../builders/thread-builders.js";
 import {MYTHIC} from "../../../../../../utils/mythic/mythic.js";
 import {SCENE_BUILDERS} from "../../../../../../builders/scene-builders.js";
 import {
     MEANING_TABLES,
     NEW_SCENE_RESULT, NEW_SCENE_RESULT_TO_STRING,
-    RANDOM_EVENTS,
-    RANDOM_EVENTS_TO_STRING
 } from "../../../../../../utils/mythic/mythic-constants.js";
-
-const formatRandomEvent = randomEvent => {
-    if (!randomEvent) return '';
-
-    const eventStr = RANDOM_EVENTS_TO_STRING[randomEvent.event];
-    if (randomEvent.event === RANDOM_EVENTS.NPC_ACTION
-        || randomEvent.event === RANDOM_EVENTS.NPC_POSITIVE
-        || randomEvent.event === RANDOM_EVENTS.NPC_NEGATIVE) {
-        return `${eventStr} (${randomEvent.character.name} - ${randomEvent.character.description})`;
-    }
-
-    if (randomEvent.event === RANDOM_EVENTS.CLOSE_A_THREAD
-        || randomEvent.event === RANDOM_EVENTS.MOVE_AWAY_FORM_THREAD
-        || randomEvent.event === RANDOM_EVENTS.MOVE_TOWARDS_THREAD
-    ) {
-        return `${eventStr} (${randomEvent.thread.name})`;
-    }
-    return eventStr;
-};
+import {RANDOM_EVENT_FORMATTERS} from "../../../../../../utils/formatters/random-event-formatters.js";
 
 const NewSceneBase = props => {
     const [location, navigation] = useLocation();
     const headerProps = useMemo(() => mapHeader(), []);
 
     const [scene, setScene] = useState({
-        ...SCENE_BUILDERS.initialScene,
+        ...SCENE_BUILDERS.initialScene(),
         chaosFactor: props.chaosFactor,
     });
     const [sceneResult, setSceneResult] = useState(null);
@@ -212,7 +190,7 @@ const NewSceneBase = props => {
                                 </Stack>
                                 <Stack direction="row" spacing={1}>
                                     <Button variant="solid" size="sm" onClick={onInterruptRandomEvent}>Roll Random Event</Button>
-                                    <Typography level="body2" sx={{alignSelf: 'center'}}>{formatRandomEvent(inspiration?.randomEvent)}</Typography>
+                                    <Typography level="body2" sx={{alignSelf: 'center'}}>{RANDOM_EVENT_FORMATTERS.formatRandomEvent(inspiration?.randomEvent)}</Typography>
                                 </Stack>
                                 <Stack direction="row" spacing={1}>
                                     <Button variant="solid" size="sm" onClick={onInterruptActions}>Roll on Actions</Button>

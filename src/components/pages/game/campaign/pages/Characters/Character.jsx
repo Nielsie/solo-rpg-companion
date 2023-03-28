@@ -13,6 +13,10 @@ import {Virtuoso} from "react-virtuoso";
 import {CHARACTER_BUILDERS} from "../../../../../../builders/character-builders.js";
 import {EntryEditor} from "../editors/EntryEditor.jsx";
 import {BioEntryCard} from "./cards/BioEntryCard.jsx";
+import {HamburgerMenu} from "../../../../../layout/header/buttons/HamburgerMenu.jsx";
+import {CharacterMenu} from "./menu/CharacterMenu.jsx";
+import {IconMenuButton} from "../../../../../layout/header/buttons/IconMenuButton.jsx";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew.js";
 
 const renderBioCard = (characterId) => (index) => {
     return (
@@ -24,7 +28,7 @@ const CharacterBase = props => {
     const [location, navigation] = useLocation();
     const [isEditMode, setIsEditMode] = useState(false);
     const [isRemoveDialogOpen, setIsRemoveDialogOpen] = useState(false);
-    const headerProps = useMemo(() => mapHeader(props.name), [props.name]);
+    const headerProps = useMemo(() => mapHeader(props.name, props.campaignId, props.id), [props.name, props.campaignId, props.id]);
 
     const validate = () => {
         //todo!
@@ -37,7 +41,7 @@ const CharacterBase = props => {
     const onSubmitClick = (newCharData) => {
         if (validate()) {
             setIsEditMode(false);
-            props.onEditCharacter(CHARACTER_BUILDERS.buildUpdatedCharacter(props.id, newCharData.name, newCharData.description, newCharData.isActive));
+            props.onEditCharacter(CHARACTER_BUILDERS.buildUpdatedCharacter(props.id, newCharData.name, newCharData.description, newCharData.imageUrl, newCharData.isActive));
         }
     };
 
@@ -68,6 +72,7 @@ const CharacterBase = props => {
                         <CharacterDetails
                             name={props.name}
                             description={props.description}
+                            imageUrl={props.imageUrl}
                             isActive={props.isActive}
                             onEditClick={onEditClick}
                             onRemoveClick={onRemoveClick}
@@ -77,6 +82,7 @@ const CharacterBase = props => {
                         <CharacterEditor
                             name={props.name}
                             description={props.description}
+                            imageUrl={props.imageUrl}
                             isActive={props.isActive}
                             onSubmitClick={onSubmitClick}
                             onCancelClick={onCancelClick}
@@ -91,6 +97,7 @@ const CharacterBase = props => {
                         <EntryEditor caption="New Bio Entry:" onSubmitClick={onBioSubmitClick}/>
                     </Card>
                     <Virtuoso
+                        style={{ height: 100 }}
                         useWindowScroll
                         totalCount={props.bio.length || 0}
                         components={MuiStyledComponents}
@@ -112,9 +119,12 @@ const CharacterBase = props => {
     );
 };
 
-const mapHeader = name => ({
+const mapHeader = (name, campaignId, characterId) => ({
     title: name,
-    leftButtonGroup: [() => <BackArrow/>],
+    leftButtonGroup: [() => <IconMenuButton href={`/game/${campaignId}/characters`} icon={<ArrowBackIosNewIcon/>}/>],
+    rightButtonGroup: [
+        () => <HamburgerMenu renderItems={() => (<CharacterMenu campaignId={campaignId} characterId={characterId}/>)}/>,
+    ],
 });
 
 const selectors = ownProps => state => ([
@@ -132,6 +142,7 @@ const mappers = (id, name, character, editCharacter, removeCharacter, addBioEntr
     id: character?.id,
     name: character?.name,
     description: character?.description,
+    imageUrl: character?.imageUrl,
     isActive: character?.isActive,
 
     bio: character?.bio,

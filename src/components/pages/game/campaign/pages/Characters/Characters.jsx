@@ -1,7 +1,7 @@
 import Box from "@mui/joy/Box";
 import {connectCampaign} from "../../../../../../utils/zustand/connect.jsx";
 import {Master} from "../../../../../layout/header/Master.jsx";
-import {Button, Card, Link, Typography} from "@mui/joy";
+import {Button, Typography} from "@mui/joy";
 import {Virtuoso} from 'react-virtuoso';
 import {MuiStyledComponents} from "../list-components/ListComponents.jsx";
 import {IconMenuButton} from "../../../../../layout/header/buttons/IconMenuButton";
@@ -9,6 +9,7 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import {useMemo} from "react";
 import {CharacterCard} from "./cards/CharacterCard.jsx";
+import {Link} from "wouter";
 
 const renderCharacterCard = index => {
     return (
@@ -24,8 +25,7 @@ const CharactersBase = props => {
 
             {props.totalCount === 0 && (
                 <Box sx={{px: 2}}>
-                    <Typography level="body2">You have no characters in your campaign yet! Let's create your first
-                        one!</Typography>
+                    <Typography level="body2">You have no characters in your campaign yet! Let's create your first one!</Typography>
                     <Link href={`/game/${props.campaignId}/characters/new`}><Button sx={{mt: 1}}>New Character</Button></Link>
                 </Box>
             )}
@@ -43,7 +43,6 @@ const CharactersBase = props => {
                             totalCount={props.totalCount}
                             components={MuiStyledComponents}
                             itemContent={renderCharacterCard}
-                            initialTopMostItemIndex={(props.totalCount || 0) - 1}
                         />
                     </Box>
                 </Box>

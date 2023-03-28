@@ -2,20 +2,39 @@ export const CARD_TYPES = {
     TEXT: 0,
     FATE_CHECK: 1,
     MEANING_ROLL: 2,
-
+    RANDOM_EVENT: 3,
 
     CHARACTER_ADDED: 1001,
     CHARACTER_MODIFIED: 1002,
     CHARACTER_REMOVED: 1003,
+    CHARACTER_BIO_ADDED: 1004,
+
+    THREAD_ADDED: 1101,
+    THREAD_MODIFIED: 1102,
+    THREAD_REMOVED: 1103,
+
+    SCENE_ADDED: 1201,
+    SCENE_MODIFIED: 1202,
+    SCENE_REMOVED: 1203,
 };
 
 export const CARD_TYPES_TO_STRING = {
     [CARD_TYPES.TEXT]: "Text",
     [CARD_TYPES.FATE_CHECK]: "Fate Check",
     [CARD_TYPES.MEANING_ROLL]: "Meaning Roll",
+    [CARD_TYPES.RANDOM_EVENT]: "Random Event",
 
 
     [CARD_TYPES.CHARACTER_ADDED]: "Character Added",
     [CARD_TYPES.CHARACTER_MODIFIED]: "Character Modified",
     [CARD_TYPES.CHARACTER_REMOVED]: "Character Removed",
+    [CARD_TYPES.CHARACTER_BIO_ADDED]: "Bio Entry Added",
+
+    [CARD_TYPES.THREAD_ADDED]: "Thread Added",
+    [CARD_TYPES.THREAD_MODIFIED]: "Thread Modified",
+    [CARD_TYPES.THREAD_REMOVED]: "Thread Removed",
+
+    [CARD_TYPES.SCENE_ADDED]: "Scene Added",
+    [CARD_TYPES.SCENE_MODIFIED]: "Scene Modified",
+    [CARD_TYPES.SCENE_REMOVED]: "Scene Removed",
 };

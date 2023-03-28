@@ -43,6 +43,7 @@ const addBioEntry = set => (id, newBioEntry) => {
             }
             return character;
         }),
+        timeline: [...state.timeline, TIMELINE_BUILDERS.characterBioAdded(id, newBioEntry)],
     }));
 };
 

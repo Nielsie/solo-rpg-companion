@@ -1,4 +1,4 @@
-import {Card, FormControl, FormLabel, IconButton, Input, Sheet, Stack, Switch, Typography} from "@mui/joy";
+import {AspectRatio, Card, FormControl, FormLabel, IconButton, Input, Sheet, Stack, Switch, Typography} from "@mui/joy";
 import CheckIcon from '@mui/icons-material/Check';
 import CancelIcon from '@mui/icons-material/Cancel';
 import {useState} from "react";
@@ -6,15 +6,23 @@ import {useState} from "react";
 export const CharacterEditor = props => {
     const [name, setName] = useState(props.name);
     const [description, setDescription] = useState(props.description);
+    const [imageUrl, setImageUrl] = useState(props.imageUrl);
+    const [driveId, setDriveId] = useState('');
     const [isActive, setIsActive] = useState(props.isActive);
 
     const onNameChange = event => setName(event.target.value);
     const onDescriptionChange = event => setDescription(event.target.value);
+    const onImageUrlChange = event => setImageUrl(event.target.value);
+    const onDriveIdChange = event => {
+        setDriveId(event.target.value);
+        setImageUrl(`https://drive.google.com/uc?id=${event.target.value}`);
+    }
     const onToggleClick = event => setIsActive(event.target.checked);
 
     const onSubmitClick = () => props.onSubmitClick && props.onSubmitClick({
         name,
         description,
+        imageUrl,
         isActive,
     });
     const onCancelClick = () => props.onCancelClick && props.onCancelClick();
@@ -25,6 +33,18 @@ export const CharacterEditor = props => {
             sx={{width: '100%'}}
         >
             <Stack direction="column" spacing={2}>
+                <Stack direction="row" spacing={1}>
+                    <Stack direction="column" spacing={1}>
+                        <Typography level="body3">Image Url</Typography>
+                        <Input onChange={onImageUrlChange} value={imageUrl}/>
+                        <Input onChange={onDriveIdChange} value={driveId}/>
+                    </Stack>
+                    <AspectRatio ratio="1" sx={{width: '100%'}}>
+                        <img
+                            src={imageUrl || ''}
+                        />
+                    </AspectRatio>
+                </Stack>
                 <Stack direction="column" spacing={1}>
                     <Typography level="body3">Character Name</Typography>
                     <Input onChange={onNameChange} value={name}/>

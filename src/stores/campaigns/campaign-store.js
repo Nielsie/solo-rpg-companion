@@ -5,6 +5,8 @@ import {timelineActions} from "./campaign-actions/timeline-actions.js";
 import {characterActions} from "./campaign-actions/character-actions.js";
 import {threadActions} from "./campaign-actions/thread-actions.js";
 import {sceneActions} from "./campaign-actions/scene-actions.js";
+import {loadRuleset} from "./campaign-actions/rulesets/rulesetLoader.js";
+import {debugActions} from "./campaign-actions/debug-actions.js";
 
 // this is a bit of a hack, this keeps the current campaignId cached in memory, so we don't have to retrieve it from the url all the time
 let currentId = null;
@@ -28,6 +30,7 @@ export const useCampaignStore = (id) => {
                     ...characterActions(set),
                     ...threadActions(set),
                     ...sceneActions(set),
+                    ...debugActions(set),
 
                     // safe defaults
                     characters: [],
@@ -35,12 +38,18 @@ export const useCampaignStore = (id) => {
                     scenes: [],
 
                     _hasHydrated: false,
-                    setHasHydrated: (state) => {
+                    setHasHydrated: async (state) => {
+                        set({
+                            loadRuleset: async () => loadRuleset(set, get),
+                            _hasHydrated: false,
+                        });
+                        await get().loadRuleset();
+                        console.log('Ruleset actions have finished loading');
                         set({
                             _hasHydrated: state,
                         });
                     },
-                })),
+                }), { name, store: `campaign-store-${id}` }),
             {
                 name: `SRC-campaign-${campaignId}`,
                 storage: createJSONStorage(() => localforage),

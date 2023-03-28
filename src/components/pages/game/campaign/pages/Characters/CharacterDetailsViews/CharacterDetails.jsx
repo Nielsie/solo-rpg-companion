@@ -1,4 +1,15 @@
-import {Card, FormControl, FormLabel, IconButton, Sheet, Stack, Switch, Typography} from "@mui/joy";
+import {
+    AspectRatio,
+    Card,
+    CardOverflow,
+    FormControl,
+    FormLabel,
+    IconButton,
+    Sheet,
+    Stack,
+    Switch,
+    Typography
+} from "@mui/joy";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -12,7 +23,16 @@ export const CharacterDetails = props => {
             variant="outlined"
             sx={{width: '100%'}}
         >
-            <Stack direction="column" spacing={2}>
+            {props.imageUrl && (
+                <CardOverflow>
+                    <AspectRatio ratio="1">
+                        <img
+                            src={props.imageUrl}
+                        />
+                    </AspectRatio>
+                </CardOverflow>
+            )}
+            <Stack direction="column" spacing={2} sx={{pt: (props.imageUrl ? 2 : 0)}}>
                 <Stack direction="column" spacing={1}>
                     <Typography level="body3">Character Name</Typography>
                     <Typography level="h6">{props.name}</Typography>
