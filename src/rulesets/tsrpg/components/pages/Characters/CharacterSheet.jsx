@@ -12,7 +12,7 @@ import {IconMenuButton} from "../../../../../components/layout/header/buttons/Ic
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew.js";
 
 const CharacterSheetBase = props => {
-    const headerProps = useMemo(() => mapHeader(props.name, props.campaignId, props.characterId), [props.name, props.campaignId, props.characterId]);
+    const headerProps = props.headerProps || useMemo(() => mapHeader(props.name, props.campaignId, props.characterId), [props.name, props.campaignId, props.characterId]);
 
     const onEditCharacterSheetStat = (newStat) => props.onEditCharacterSheetStat && props.onEditCharacterSheetStat(newStat);
     const onStatChange = (type, isIncrement) => () => {
