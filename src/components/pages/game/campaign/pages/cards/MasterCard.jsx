@@ -40,6 +40,8 @@ const MasterCardBase = props => {
         case CARD_TYPES.CHARACTER_ADDED: return <CharacterAddedCard index={props.index}/>;
         case CARD_TYPES.CHARACTER_BIO_ADDED: return <CharacterBioAddedCard index={props.index}/>;
         case CARD_TYPES.SCENE_ADDED: return <SceneAddedCard index={props.index}/>;
+
+
         default: {
             if (masterCardRenderer) return masterCardRenderer(props.type, props.index);
             return <br/>;

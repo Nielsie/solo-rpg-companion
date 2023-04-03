@@ -14,7 +14,7 @@ const ToolsMeaningRollsBase = props => {
 
     return (
         <Master {...headerProps}>
-            <Stack direction="column" spacing={2} sx={{px: 2}}>
+            <Stack direction="column" spacing={2} sx={{px: 2, pb: 2}}>
                 <FormLabel>On which table do you want to roll?</FormLabel>
                 <Stack direction="column" spacing={2} mt={2}>
                     <Button onClick={onTableClick(0)}>Meaning Tables: Actions</Button>

@@ -41,7 +41,14 @@ const CharacterBase = props => {
     const onSubmitClick = (newCharData) => {
         if (validate()) {
             setIsEditMode(false);
-            props.onEditCharacter(CHARACTER_BUILDERS.buildUpdatedCharacter(props.id, newCharData.name, newCharData.description, newCharData.imageUrl, newCharData.isActive));
+            props.onEditCharacter(CHARACTER_BUILDERS.buildUpdatedCharacter(
+                props.id,
+                newCharData.name,
+                newCharData.description,
+                newCharData.imageUrl,
+                newCharData.isPlayer,
+                newCharData.isActive,
+            ));
         }
     };
 
@@ -73,6 +80,7 @@ const CharacterBase = props => {
                             name={props.name}
                             description={props.description}
                             imageUrl={props.imageUrl}
+                            isPlayer={props.isPlayer}
                             isActive={props.isActive}
                             onEditClick={onEditClick}
                             onRemoveClick={onRemoveClick}
@@ -83,6 +91,7 @@ const CharacterBase = props => {
                             name={props.name}
                             description={props.description}
                             imageUrl={props.imageUrl}
+                            isPlayer={props.isPlayer}
                             isActive={props.isActive}
                             onSubmitClick={onSubmitClick}
                             onCancelClick={onCancelClick}
@@ -143,6 +152,7 @@ const mappers = (id, name, character, editCharacter, removeCharacter, addBioEntr
     name: character?.name,
     description: character?.description,
     imageUrl: character?.imageUrl,
+    isPlayer: character?.isPlayer,
     isActive: character?.isActive,
 
     bio: character?.bio,

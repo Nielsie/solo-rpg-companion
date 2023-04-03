@@ -86,7 +86,7 @@ const mappers = (id, character, toggleCharacterActiveness, ownProps) => ({
     title: character?.name,
     subtitle: character?.description,
     imageUrl: character?.imageUrl,
-    caption: character?.isActive ? 'Active' : 'Inactive',
+    caption: `${character?.isActive ? 'Active' : 'Inactive'} ${character.isPlayer ? 'Player' : 'NPC'}`,
     isDisabled: !(character?.isActive),
     date: DATE_UTILS.formatDateTimeFromIso(character?.created || new Date()),
     onToggleClick: (isChecked) => toggleCharacterActiveness(character?.id, isChecked),

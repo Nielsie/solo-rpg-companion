@@ -1,17 +1,17 @@
 import Box from "@mui/joy/Box";
 import {connectCampaign} from "../../../../../../utils/zustand/connect.jsx";
 import {Master} from "../../../../../layout/header/Master.jsx";
-import {Button, FormControl, FormLabel, Input, Sheet, Stack, Typography} from "@mui/joy";
+import {Button, FormControl, FormLabel, Input, Sheet, Stack, Switch, Typography} from "@mui/joy";
 import {BackArrow} from "../../../../../layout/header/buttons/BackArrow.jsx";
 import {useMemo, useState} from "react";
 import {useLocation} from "wouter";
-import {UUID} from "../../../../../../utils/uuid.js";
 import {CHARACTER_BUILDERS} from "../../../../../../builders/character-builders.js";
 
 const NewCharacterBase = props => {
     const [location, navigation] = useLocation();
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
+    const [isPlayer, setIsPlayer] = useState(false);
     const [bio, setBio] = useState('');
     const headerProps = useMemo(() => mapHeader(props), [props]);
 
@@ -22,10 +22,11 @@ const NewCharacterBase = props => {
 
     const onNameChange = event => setName(event.target.value);
     const onDescriptionChange = event => setDescription(event.target.value);
+    const onIsPlayerToggleClick = event => setIsPlayer(event.target.checked);
     const onBioChange = event => setBio(event.target.value);
     const onSubmitClick = () => {
         if (validate()) {
-            props.onNewCharacter(CHARACTER_BUILDERS.buildNewCharacter(name, description, true, bio));
+            props.onNewCharacter(CHARACTER_BUILDERS.buildNewCharacter(name, description, isPlayer, true, bio));
             navigation(`/game/${props.campaignId}/characters`);
         }
     };
@@ -63,6 +64,19 @@ const NewCharacterBase = props => {
                         <FormControl>
                             <FormLabel>Description (something short like: 'My old mentor')</FormLabel>
                             <Input onChange={onDescriptionChange} value={description}/>
+                        </FormControl>
+                        <FormControl>
+                            <FormLabel>Is this a NPC or Player Character?</FormLabel>
+                            <Stack direction="row" sx={{mt: 1}}>
+                                <Switch
+                                    checked={isPlayer}
+                                    color="primary"
+                                    variant="solid"
+                                    startDecorator={<Typography level="body2">NPC</Typography>}
+                                    endDecorator={<Typography level="body2">Player</Typography>}
+                                    onChange={onIsPlayerToggleClick}
+                                />
+                            </Stack>
                         </FormControl>
                         <FormControl>
                             <FormLabel>First Bio Entry (optional)</FormLabel>

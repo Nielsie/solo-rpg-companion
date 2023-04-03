@@ -4,10 +4,11 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import {useState} from "react";
 
 export const CharacterEditor = props => {
-    const [name, setName] = useState(props.name);
-    const [description, setDescription] = useState(props.description);
-    const [imageUrl, setImageUrl] = useState(props.imageUrl);
+    const [name, setName] = useState(props.name || '');
+    const [description, setDescription] = useState(props.description || '');
+    const [imageUrl, setImageUrl] = useState(props.imageUrl || '');
     const [driveId, setDriveId] = useState('');
+    const [isPlayer, setIsPlayer] = useState(props.isPlayer || false);
     const [isActive, setIsActive] = useState(props.isActive);
 
     const onNameChange = event => setName(event.target.value);
@@ -17,12 +18,14 @@ export const CharacterEditor = props => {
         setDriveId(event.target.value);
         setImageUrl(`https://drive.google.com/uc?id=${event.target.value}`);
     }
-    const onToggleClick = event => setIsActive(event.target.checked);
+    const onIsPlayerToggleClick = event => setIsPlayer(event.target.checked);
+    const onIsActiveToggleClick = event => setIsActive(event.target.checked);
 
     const onSubmitClick = () => props.onSubmitClick && props.onSubmitClick({
         name,
         description,
         imageUrl,
+        isPlayer,
         isActive,
     });
     const onCancelClick = () => props.onCancelClick && props.onCancelClick();
@@ -53,6 +56,20 @@ export const CharacterEditor = props => {
                     <Typography level="body3">Description</Typography>
                     <Input onChange={onDescriptionChange} value={description}/>
                 </Stack>
+                <Stack direction="column" spacing={1}>
+                    <Typography level="body3">Is Player Character?</Typography>
+                    <Stack direction="row">
+                        <Switch
+                            checked={isPlayer}
+                            color="primary"
+                            size="sm"
+                            variant="solid"
+                            startDecorator={<Typography level="body3">NPC</Typography>}
+                            endDecorator={<Typography level="body3">Player</Typography>}
+                            onChange={onIsPlayerToggleClick}
+                        />
+                    </Stack>
+                </Stack>
                 <Stack direction="column" spacing={1} sx={{flexWrap: 'wrap', alignContent: 'flex-start'}}>
                     <Typography level="body3">Is Active?</Typography>
                     <Stack direction="row" sx={{width: '100%'}}>
@@ -61,7 +78,7 @@ export const CharacterEditor = props => {
                             color="primary"
                             size="sm"
                             variant="solid"
-                            onChange={onToggleClick}
+                            onChange={onIsActiveToggleClick}
                         />
                         <Stack direction="row" sx={{ml: 'auto'}} spacing={1}>
                             <IconButton variant="solid" color="success" onClick={onSubmitClick}>

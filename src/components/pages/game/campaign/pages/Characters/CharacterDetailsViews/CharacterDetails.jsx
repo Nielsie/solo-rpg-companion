@@ -41,6 +41,10 @@ export const CharacterDetails = props => {
                     <Typography level="body3">Description</Typography>
                     <Typography level="h6">{props.description}</Typography>
                 </Stack>
+                <Stack direction="column" spacing={1}>
+                    <Typography level="body3">Is Player Character?</Typography>
+                    <Typography level="h6">{props.isPlayer ? 'Player' : 'NPC'}</Typography>
+                </Stack>
                 <Stack direction="column" spacing={1} sx={{flexWrap: 'wrap', alignContent: 'flex-start'}}>
                     <Typography level="body3">Is Active?</Typography>
                     <Stack direction="row" sx={{width: '100%'}}>

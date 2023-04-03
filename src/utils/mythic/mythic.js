@@ -37,7 +37,7 @@ const fateCheck = (probability, chaosFactor) => {
 const getRandomEvent = () => {
     const campaign = useCampaignStore();
     const state = campaign.getState();
-    const characters = state.characters?.filter(c => c.isActive) || [];
+    const characters = state.characters?.filter(c => !c.isPlayer).filter(c => c.isActive) || [];
     const threads = state.threads?.filter(t => t.isInProgress) || [];
 
     const roll = DICE.d100();
@@ -60,9 +60,11 @@ const rollOnMeaningTable = (table) => {
         table2 = mythicTables[MEANING_TABLES.ACTIONS_PART2];
     } else if (table === MEANING_TABLES.DESCRIPTIONS) {
         table2 = mythicTables[MEANING_TABLES.DESCRIPTIONS_PART2];
-    } else {
-        while(roll2 === roll1) roll2 = DICE.d100();
     }
+    // we actually should allow doubles
+    /*else {
+        while(roll2 === roll1) roll2 = DICE.d100();
+    }*/
 
     return {
         table,
