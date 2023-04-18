@@ -1,4 +1,5 @@
 import {
+    AspectRatio,
     Avatar,
     Button,
     Card,
@@ -22,6 +23,7 @@ import {CharacterSheet} from "../Characters/CharacterSheet";
 import {TSRPG} from "../../../engines/tsrpg-engine.js";
 import {TSRPG_TIMELINE_BUILDERS} from "../../../builders/tsrpg-timeline-builders.js";
 import {useLocation} from "wouter";
+import {Image} from "../../../../../image-storage/components/Image.jsx";
 
 const ToolsSkillCheckBase = props => {
     const [location, navigation] = useLocation();
@@ -107,7 +109,9 @@ const ToolsSkillCheckBase = props => {
                                     <Fragment key={character.id}>
                                         <Option value={character.id}>
                                             <ListItemDecorator>
-                                                <Avatar alt={character.name} src={character.imageUrl} sx={{mr: 2, borderRadius: 'sm'}}>{character.name[0]}</Avatar>
+                                                <Avatar alt={character.name} sx={{mr: 2, borderRadius: 'sm'}}>
+                                                    <AspectRatio ratio="1" sx={{width: '100%'}}><Image id={character.imageId} width={52}/></AspectRatio>
+                                                </Avatar>
                                             </ListItemDecorator>
                                             <Typography level="body2">{character.name}</Typography>
                                         </Option>
@@ -187,7 +191,7 @@ const mappers = (id, name, characters, characterSheets, addTimelineEntry, ownPro
         .map(character => ({
             id: character.id,
             name: `${character.name}${character.description && ` (${character.description})`}`,
-            imageUrl: character.imageUrl,
+            imageId: character.imageId,
             sheet: characterSheets.find(sheet => sheet.id === character.id)
         })),
 

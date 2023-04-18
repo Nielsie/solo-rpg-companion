@@ -14,6 +14,7 @@ import {
     CssVarsProvider,
     shouldSkipGeneratingVar as joyShouldSkipGeneratingVar,
 } from '@mui/joy/styles';
+import {registerSW} from "virtual:pwa-register";
 
 const { unstable_sxConfig: muiSxConfig, ...muiTheme } = extendMuiTheme({
     // This is required to point to `var(--joy-*)` because we are using
@@ -92,6 +93,17 @@ mergedTheme.unstable_sxConfig = {
     ...joySxConfig
 };
 
+// add this to prompt for a refresh
+const updateSW = registerSW({
+    onNeedRefresh: () => {
+        if (confirm("New content available. Reload the app?")) {
+            updateSW(true);
+        }
+    },
+    onOfflineReady: () => {
+        console.log("App is ready for offline usage.");
+    },
+});
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>

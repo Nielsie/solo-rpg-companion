@@ -1,10 +1,10 @@
 import {UUID} from "../utils/uuid.js";
 
-const buildNewCharacter = (name, description, isPlayer = false, isActive = true, bio = null, imageUrl = null, id = UUID.generate(), created = new Date()) => ({
+const buildNewCharacter = (name, description, isPlayer = false, isActive = true, bio = null, imageId = null, id = UUID.generate(), created = new Date()) => ({
     id,
     name,
     description,
-    imageUrl,
+    imageId,
     isPlayer,
     isActive,
     created,
@@ -16,11 +16,11 @@ const buildNewCharacter = (name, description, isPlayer = false, isActive = true,
     }] : [],
 });
 
-const buildUpdatedCharacter = (id, name, description, imageUrl, isPlayer = false, isActive = true, updated = new Date()) => ({
+const buildUpdatedCharacter = (id, name, description, imageId, isPlayer = false, isActive = true, updated = new Date()) => ({
     id,
     name,
     description,
-    imageUrl,
+    imageId,
     isPlayer,
     isActive,
     updated,

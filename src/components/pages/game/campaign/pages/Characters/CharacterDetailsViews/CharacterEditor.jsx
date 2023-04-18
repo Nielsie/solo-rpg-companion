@@ -2,33 +2,35 @@ import {AspectRatio, Card, FormControl, FormLabel, IconButton, Input, Sheet, Sta
 import CheckIcon from '@mui/icons-material/Check';
 import CancelIcon from '@mui/icons-material/Cancel';
 import {useState} from "react";
+import {FileDialogButton} from "../../../../../../layout/inputs/FileDialogButton";
+import {IMAGES_DB} from "../../../../../../../image-storage/imagedb.js";
+import {Image} from "../../../../../../../image-storage/components/Image.jsx";
 
 export const CharacterEditor = props => {
     const [name, setName] = useState(props.name || '');
     const [description, setDescription] = useState(props.description || '');
-    const [imageUrl, setImageUrl] = useState(props.imageUrl || '');
-    const [driveId, setDriveId] = useState('');
+    const [imageId, setImageId] = useState(props.imageId || null);
     const [isPlayer, setIsPlayer] = useState(props.isPlayer || false);
     const [isActive, setIsActive] = useState(props.isActive);
 
     const onNameChange = event => setName(event.target.value);
     const onDescriptionChange = event => setDescription(event.target.value);
-    const onImageUrlChange = event => setImageUrl(event.target.value);
-    const onDriveIdChange = event => {
-        setDriveId(event.target.value);
-        setImageUrl(`https://drive.google.com/uc?id=${event.target.value}`);
-    }
+    const onImageDataLoaded = async (file) => {
+        const id = await IMAGES_DB.setItem(file);
+        setImageId(id);
+    };
     const onIsPlayerToggleClick = event => setIsPlayer(event.target.checked);
     const onIsActiveToggleClick = event => setIsActive(event.target.checked);
 
     const onSubmitClick = () => props.onSubmitClick && props.onSubmitClick({
         name,
         description,
-        imageUrl,
+        imageId,
         isPlayer,
         isActive,
     });
     const onCancelClick = () => props.onCancelClick && props.onCancelClick();
+
 
     return (
         <Card
@@ -39,13 +41,10 @@ export const CharacterEditor = props => {
                 <Stack direction="row" spacing={1}>
                     <Stack direction="column" spacing={1}>
                         <Typography level="body3">Image Url</Typography>
-                        <Input onChange={onImageUrlChange} value={imageUrl}/>
-                        <Input onChange={onDriveIdChange} value={driveId}/>
+                        <FileDialogButton label="Upload Image" onFileLoaded={onImageDataLoaded}/>
                     </Stack>
                     <AspectRatio ratio="1" sx={{width: '100%'}}>
-                        <img
-                            src={imageUrl || ''}
-                        />
+                        <Image id={imageId} isThumbnail={false}/>
                     </AspectRatio>
                 </Stack>
                 <Stack direction="column" spacing={1}>

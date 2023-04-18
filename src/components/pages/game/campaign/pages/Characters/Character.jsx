@@ -45,7 +45,7 @@ const CharacterBase = props => {
                 props.id,
                 newCharData.name,
                 newCharData.description,
-                newCharData.imageUrl,
+                newCharData.imageId,
                 newCharData.isPlayer,
                 newCharData.isActive,
             ));
@@ -79,7 +79,7 @@ const CharacterBase = props => {
                         <CharacterDetails
                             name={props.name}
                             description={props.description}
-                            imageUrl={props.imageUrl}
+                            imageId={props.imageId}
                             isPlayer={props.isPlayer}
                             isActive={props.isActive}
                             onEditClick={onEditClick}
@@ -90,7 +90,7 @@ const CharacterBase = props => {
                         <CharacterEditor
                             name={props.name}
                             description={props.description}
-                            imageUrl={props.imageUrl}
+                            imageId={props.imageId}
                             isPlayer={props.isPlayer}
                             isActive={props.isActive}
                             onSubmitClick={onSubmitClick}
@@ -151,7 +151,7 @@ const mappers = (id, name, character, editCharacter, removeCharacter, addBioEntr
     id: character?.id,
     name: character?.name,
     description: character?.description,
-    imageUrl: character?.imageUrl,
+    imageId: character?.imageId,
     isPlayer: character?.isPlayer,
     isActive: character?.isActive,
 

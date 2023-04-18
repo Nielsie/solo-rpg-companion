@@ -1,8 +1,9 @@
 import {connectCampaign} from "../../../../../../../utils/zustand/connect.jsx";
 import {DATE_UTILS} from "../../../../../../../utils/dates.js";
 import Box from "@mui/joy/Box";
-import {Avatar, Card, CardOverflow, Divider, Link as MuiLink, Stack, Switch, Typography} from "@mui/joy";
+import {AspectRatio, Avatar, Card, CardOverflow, Divider, Link as MuiLink, Stack, Switch, Typography} from "@mui/joy";
 import {Link} from "wouter";
+import {Image} from "../../../../../../../image-storage/components/Image.jsx";
 
 const CharacterCardBase = props => {
 
@@ -23,7 +24,9 @@ const CharacterCardBase = props => {
         >
             <Box sx={{pb: 2}}>
                 <Box sx={{display: 'flex', alignItems: 'center'}}>
-                    <Avatar alt={props.title} src={props.imageUrl} sx={{mr: 2, borderRadius: 'sm'}}>{props.title[0]}</Avatar>
+                    <Avatar alt={props.title} sx={{mr: 2, borderRadius: 'sm'}}>
+                        <AspectRatio ratio="1" sx={{width: '100%'}}><Image id={props.imageId} width={52}/></AspectRatio>
+                    </Avatar>
                     <Link href={`/game/${props.campaignId}/characters/${props.id}`}>
                         <MuiLink
                             overlay
@@ -85,7 +88,7 @@ const mappers = (id, character, toggleCharacterActiveness, ownProps) => ({
     id: character?.id,
     title: character?.name,
     subtitle: character?.description,
-    imageUrl: character?.imageUrl,
+    imageId: character?.imageId,
     caption: `${character?.isActive ? 'Active' : 'Inactive'} ${character.isPlayer ? 'Player' : 'NPC'}`,
     isDisabled: !(character?.isActive),
     date: DATE_UTILS.formatDateTimeFromIso(character?.created || new Date()),

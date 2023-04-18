@@ -4,12 +4,13 @@ import {HamburgerMenu} from "../../../../../components/layout/header/buttons/Ham
 import {CharacterMenu} from "../../../../../components/pages/game/campaign/pages/Characters/menu/CharacterMenu.jsx";
 import {connectCampaign} from "../../../../../utils/zustand/connect.jsx";
 import {Master} from "../../../../../components/layout/header/Master.jsx";
-import {Avatar, Box, Card, Stack, Typography} from "@mui/joy";
+import {AspectRatio, Avatar, Box, Card, Stack, Typography} from "@mui/joy";
 import {STATS} from "../../../constants/stats.js";
 import {SheetItemCard} from "./Cards/SheetItemCard.jsx";
 import {SheetStatCard} from "./Cards/SheetStatCard.jsx";
 import {IconMenuButton} from "../../../../../components/layout/header/buttons/IconMenuButton.jsx";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew.js";
+import {Image} from "../../../../../image-storage/components/Image.jsx";
 
 const CharacterSheetBase = props => {
     const headerProps = props.headerProps || useMemo(() => mapHeader(props.name, props.campaignId, props.characterId), [props.name, props.campaignId, props.characterId]);
@@ -39,7 +40,9 @@ const CharacterSheetBase = props => {
 
                 <Card variant="solid" color="primary" sx={{width: '100%'}} invertedColors>
                     <Box sx={{display: 'flex', alignItems: 'center'}}>
-                        <Avatar alt={props.name} src={props.imageUrl} sx={{mr: 2, borderRadius: 'sm'}} >{props.name[0]}</Avatar>
+                        <Avatar alt={props.title} sx={{mr: 2, borderRadius: 'sm'}}>
+                            <AspectRatio ratio="1" sx={{width: '100%'}}><Image id={props.imageId} width={52}/></AspectRatio>
+                        </Avatar>
                         <Stack direction="column">
                             <Typography level="h2" sx={{fontSize: 'md'}}>
                                 {props.name}
@@ -138,7 +141,7 @@ const mappers = (id, name, character, characterSheet,
     characterId: character?.id,
     name: character?.name,
     description: character?.description,
-    imageUrl: character?.imageUrl,
+    imageId: character?.imageId,
     trait: mapTrait(characterSheet),
     stats: mapStats(characterSheet),
     inventory: characterSheet?.inventory,

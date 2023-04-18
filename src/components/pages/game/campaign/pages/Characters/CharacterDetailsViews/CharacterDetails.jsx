@@ -12,6 +12,7 @@ import {
 } from "@mui/joy";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from '@mui/icons-material/Delete';
+import {Image} from "../../../../../../../image-storage/components/Image.jsx";
 
 export const CharacterDetails = props => {
 
@@ -23,16 +24,16 @@ export const CharacterDetails = props => {
             variant="outlined"
             sx={{width: '100%'}}
         >
-            {props.imageUrl && (
+            {props.imageId && (
                 <CardOverflow>
                     <AspectRatio ratio="1">
-                        <img
-                            src={props.imageUrl}
+                        <Image
+                            id={props.imageId}
                         />
                     </AspectRatio>
                 </CardOverflow>
             )}
-            <Stack direction="column" spacing={2} sx={{pt: (props.imageUrl ? 2 : 0)}}>
+            <Stack direction="column" spacing={2} sx={{pt: (props.imageId ? 2 : 0)}}>
                 <Stack direction="column" spacing={1}>
                     <Typography level="body3">Character Name</Typography>
                     <Typography level="h6">{props.name}</Typography>
