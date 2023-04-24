@@ -16,6 +16,7 @@
     "@mui/material": "^5.11.9",
     "@mui/utils": "^5.11.9",
     "date-fns": "^2.29.3",
+    "file-saver": "^2.0.5",
     "localforage": "^1.10.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

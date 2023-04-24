@@ -11,6 +11,7 @@ import {SheetStatCard} from "./Cards/SheetStatCard.jsx";
 import {IconMenuButton} from "../../../../../components/layout/header/buttons/IconMenuButton.jsx";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew.js";
 import {Image} from "../../../../../image-storage/components/Image.jsx";
+import {ImageAvatar} from "../../../../../image-storage/components/ImageAvatar.jsx";
 
 const CharacterSheetBase = props => {
     const headerProps = props.headerProps || useMemo(() => mapHeader(props.name, props.campaignId, props.characterId), [props.name, props.campaignId, props.characterId]);
@@ -40,9 +41,7 @@ const CharacterSheetBase = props => {
 
                 <Card variant="solid" color="primary" sx={{width: '100%'}} invertedColors>
                     <Box sx={{display: 'flex', alignItems: 'center'}}>
-                        <Avatar alt={props.title} sx={{mr: 2, borderRadius: 'sm'}}>
-                            <AspectRatio ratio="1" sx={{width: '100%'}}><Image id={props.imageId} width={52}/></AspectRatio>
-                        </Avatar>
+                        <ImageAvatar imageId={props.imageId} title={props.title}/>
                         <Stack direction="column">
                             <Typography level="h2" sx={{fontSize: 'md'}}>
                                 {props.name}

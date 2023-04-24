@@ -5,6 +5,7 @@ import {useState} from "react";
 import {FileDialogButton} from "../../../../../../layout/inputs/FileDialogButton";
 import {IMAGES_DB} from "../../../../../../../image-storage/imagedb.js";
 import {Image} from "../../../../../../../image-storage/components/Image.jsx";
+import {ImageGalleryButton} from "../../../../../../../image-storage/components/ImageGalleryButton.jsx";
 
 export const CharacterEditor = props => {
     const [name, setName] = useState(props.name || '');
@@ -19,6 +20,7 @@ export const CharacterEditor = props => {
         const id = await IMAGES_DB.setItem(file);
         setImageId(id);
     };
+    const onImageSelected = id => setImageId(id);
     const onIsPlayerToggleClick = event => setIsPlayer(event.target.checked);
     const onIsActiveToggleClick = event => setIsActive(event.target.checked);
 
@@ -42,6 +44,7 @@ export const CharacterEditor = props => {
                     <Stack direction="column" spacing={1}>
                         <Typography level="body3">Image Url</Typography>
                         <FileDialogButton label="Upload Image" onFileLoaded={onImageDataLoaded}/>
+                        <ImageGalleryButton onImageSelected={onImageSelected} />
                     </Stack>
                     <AspectRatio ratio="1" sx={{width: '100%'}}>
                         <Image id={imageId} isThumbnail={false}/>

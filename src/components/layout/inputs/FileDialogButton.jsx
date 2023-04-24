@@ -1,7 +1,8 @@
 import {Button} from "@mui/joy";
-import {useRef} from "react";
+import {useRef, useState} from "react";
 
 export const FileDialogButton = props => {
+    const [loading, setLoading] = useState(false);
     const fileInput = useRef();
 
     const onClick = () => {
@@ -9,10 +10,14 @@ export const FileDialogButton = props => {
     };
 
     const onChange = event => {
+        if (event.target.files.length === 0) return;
+
+        setLoading(true);
         const file = event.target.files[0];
         const reader = new FileReader();
         reader.onload = () => {
             //console.log('File loaded: ', file.name, file.type, file.size, reader.result);
+            setLoading(false);
             props.onFileLoaded && props.onFileLoaded({
                 name: file.name,
                 type: file.type,
@@ -25,7 +30,7 @@ export const FileDialogButton = props => {
 
     return (
         <>
-            <Button onClick={onClick}>{props.label}</Button>
+            <Button onClick={onClick} loading={loading}>{props.label}</Button>
             <input
                 ref={fileInput}
                 type="file"

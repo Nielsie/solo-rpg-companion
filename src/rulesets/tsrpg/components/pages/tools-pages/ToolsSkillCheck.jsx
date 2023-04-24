@@ -24,6 +24,7 @@ import {TSRPG} from "../../../engines/tsrpg-engine.js";
 import {TSRPG_TIMELINE_BUILDERS} from "../../../builders/tsrpg-timeline-builders.js";
 import {useLocation} from "wouter";
 import {Image} from "../../../../../image-storage/components/Image.jsx";
+import {ImageAvatar} from "../../../../../image-storage/components/ImageAvatar.jsx";
 
 const ToolsSkillCheckBase = props => {
     const [location, navigation] = useLocation();
@@ -109,9 +110,7 @@ const ToolsSkillCheckBase = props => {
                                     <Fragment key={character.id}>
                                         <Option value={character.id}>
                                             <ListItemDecorator>
-                                                <Avatar alt={character.name} sx={{mr: 2, borderRadius: 'sm'}}>
-                                                    <AspectRatio ratio="1" sx={{width: '100%'}}><Image id={character.imageId} width={52}/></AspectRatio>
-                                                </Avatar>
+                                                <ImageAvatar imageId={character.imageId} title={character.name}/>
                                             </ListItemDecorator>
                                             <Typography level="body2">{character.name}</Typography>
                                         </Option>

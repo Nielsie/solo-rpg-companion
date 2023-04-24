@@ -1,5 +1,6 @@
 import {List, ListItem, ListItemButton, ListSubheader} from "@mui/joy";
 import {Link} from "wouter";
+import {ExportCampaignButton} from "../buttons/ExportCampaignButton.jsx";
 
 export const defaultMenu = (campaignId) => {
     return (
@@ -37,6 +38,9 @@ export const defaultMenu = (campaignId) => {
                 <List>
                     <ListItem>
                         <Link href="/"><ListItemButton>Home</ListItemButton></Link>
+                    </ListItem>
+                    <ListItem>
+                        <ExportCampaignButton campaignId={campaignId} />
                     </ListItem>
                     <ListItem>
                         <Link href="/settings/mythic/tables"><ListItemButton>Edit Mythic Tables</ListItemButton></Link>
